@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ALENte XGBoost App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        hr {
+            margin-bottom: 1.5rem !important;
+            margin-top: 1.5rem !important;
+        }
+
+        .mt-15 {
+            margin-top: 15px;
+        }
+
+        .mt-40 {
+            margin-top: 40px;
+        }
+
+        .img-fluid {
+            height: 70vh;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .output-values {
+            margin-top: 11%;
+        }
+
+        .list-group {
+            text-align: left;
+            margin-top: 3rem;
+            display: none;
+        }
+
+        .list-group a {
+            text-decoration: none;
+            color: #0dcaf0;
+            padding: 0.2rem;
+        }
+
+        .form-floating label {
+            left: 13px;
+        }
+        .predict-button{
+            position: relative;
+            left: 50%;
+            right: 50%;
+            transform: translate(-50%);
+            margin-top: 10px;
+        }
+        .gender-label{
+            margin-bottom:6px;
+        }
+
+        /* Increase the padding for the card */
+        .card {
+            padding: 20px;
+        }
+
+        /* Increase font size and padding for form elements and labels */
+        .form-group label, .form-group input, .form-group select {
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        /* Style the "Predict" button */
+        .predict-button {
+            background-color: #007bff; /* Blue background color */
+            color: #fff; /* White text color */
+            font-size: 16px; /* Default font size */
+            padding: 10px 20px; /* Default padding for button size */
+        }
+    </style>
+</head>
+<body><b>
+    <div class="container mt-15 text-center">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="card"><center>
+                    <h1 class="card-header bg-info text-white">CALORIES BURNED PREDICTION</h1></center>
+                    <div class="card-body row">
+                        <div class="col-md-12 text-center">
+                            <form action="" class="row" id="data-upload" enctype="multipart/form-data" method="post">
+                                <div class="form-group gender-label">
+                                    <label for="gender">Gender</label>
+                                    <select class="form-control" id="gender" name="gender" style="width:100%;"onkeypress="return checkDecimal(event)">
+                                        <optgroup label="">
+                                           <!-- <option value="" {% if not data %} selected{% endif %} disabled>{% if data and data[0]==0 %} {{data[8]}}{% endif %} {% if data and data[0]==1 %} {{data[9]}}{% endif %}Select Gender</option>
+                                            <option value="0" {% if data and data[0] == 0 %}selected{% endif %}>Male</option>
+                                            <option value="1" {% if data and data[0] == 1 %}selected{% endif %}>Female</option>-->
+                                            <option value="" {% if not data %} selected{% endif %} disabled>{% if data %} {% if data[0] == 0 %}{{data[9]}}{% endif %}{% endif %} {% if data %} {% if data[0] == 0 %}{{data[9]}}{% endif %}{% endif %}Select Gender</option>
+                                            <!--<option value="0" {% if data %} {% if data[0] == "0" %} selected{% endif %}{% endif %}>Male</option>
+                                            <option value="1" {% if data %} {% if data[0] == "1" %} selected{% endif %}{% endif %}>Female</option>-->
+                                            <option value="0" {% if data %} {% if data[0] == "0" %} selected{% endif %}{% endif %}>Female</option>
+                                            <option value="1" {% if data %} {% if data[0] == "1" %} selected{% endif %}{% endif %}>Male</option>
+
+                                            {% if request.method == 'POST' %}
+                                            <p>Selected Gender: {{ "Male" if request.form['gender'] == '0' else "Female" }}</p>
+                                            {% endif %}
+                                        </optgroup>
+                                    </select>
+                                   
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input type="text" class="form-control" id="age" name="age" placeholder= {% if data %} {{data[1]}} {% endif %} "10-90"   onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="height">Height</label>
+                                    <input type="text" class="form-control" id="height" name="height" placeholder={% if data %} {{data[2]}} {% endif %} "150 - 190(cm)"  onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="weight">Weight</label>
+                                    <input type="text" class="form-control" id="weight" name="weight" placeholder={% if data %} {{data[3]}} {% endif %} "45-120(kg)"  onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="duration">Duration</label>
+                                    <input type="text" class="form-control" id="duration" name="duration" placeholder={% if data %} {{data[4]}} {% endif %} "1-30(min)"  onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="heart_rate">Heart Rate</label>
+                                    <input type="text" class="form-control" id="heart_rate" name="heart_rate" placeholder={% if data %} {{data[5]}} {% endif %} "75-120(bpm)" onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="body_temp">Body Temp</label>
+                                    <input type="text" class="form-control" id="body_temp" name="body_temp" placeholder={% if data %} {{data[6]}} {% endif %} "37.5-41.5(Celsius)"  onkeypress="return checkDecimal(this)" required>
+                                </div>
+                                <div class="form-group text-center" style="width:100%; "> <!-- Center the button within the form -->
+                                    <button class="btn btn-sm fw-bold text-dark predict-button text-center" id="predict" type="submit">Predict</button>
+                                    
+                                </div>
+                                {% if data %}
+                                <h2>Prediction: {{ data[7] }}</h2>
+                            {% endif %}
+
+                                <!--{% if data %}
+                                    <h2>Prediction</h2>
+                                    <p>{{ data[7] }}</p>
+                                    {% endif %}-->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</b>
+</body>
+<script>
+    function checkDecimal(element) {
+        let value = element.value;
+        var rgx = /^[0-9]*\.?[0-9]*$/;
+        if (value.match(rgx))
+            return true;
+        return false;
+    }
+</script>
+</html>

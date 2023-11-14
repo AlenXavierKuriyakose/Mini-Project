@@ -1,0 +1,127 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/static/back1.jpg');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+hr {
+    margin-bottom: 1.5rem !important;
+    margin-top: 1.5rem !important;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mt-40 {
+    margin-top: 40px;
+}
+
+.img-fluid {
+    height: 70vh;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.output-values {
+    margin-top: 11%;
+}
+
+.list-group {
+    text-align: left;
+    margin-top: 3rem;
+    display: none;
+}
+
+.list-group a {
+    text-decoration: none;
+    color: #0dcaf0;
+    padding: 0.2rem;
+}
+
+.form-floating label {
+    left: 13px;
+}
+
+/* Increase the padding for the card */
+.card {
+    padding: 20px;
+}
+
+/* Increase font size and padding for form elements and labels */
+.form-group label, .form-group input, .form-group select {
+    font-size: 16px;
+    padding: 10px;
+}
+
+/* Style the "Predict" button */
+.predict-button {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    font-size: 16px; /* Default font size */
+    padding: 10px 20px; /* Default padding for button size */
+}
+
+.container {
+    max-width: 400px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    text-align: left; /* Left-align form content */
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+}
+.predict-button {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    font-size: 18px; /* Increased font size */
+    padding: 15px 20px; /* Increased padding for button size */
+}
+
+.form-group label {
+    width: 100px; /* Adjust as needed for label width */
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
